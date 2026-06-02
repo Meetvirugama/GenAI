@@ -47,7 +47,7 @@ with gr.Blocks(
             
             mode_dropdown = gr.Dropdown(
                 choices=list(PERSONAS.keys()),
-                value="Technical Explainer",
+                value="Coding Teacher",
                 label="Active Persona Mode",
                 interactive=True
             )
@@ -64,7 +64,7 @@ with gr.Blocks(
             
             with gr.Accordion("📜 Active System Prompt", open=False, elem_classes=["system-prompt-acc"]):
                 system_prompt_md = gr.Markdown(
-                    value=update_system_prompt("Technical Explainer")
+                    value=update_system_prompt("Coding Teacher")
                 )
                 
             # Connect persona dropdown changes to Accordion display
