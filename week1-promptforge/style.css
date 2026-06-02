@@ -72,10 +72,33 @@ body, .gradio-container {
 
 /* Accordion for System Prompt */
 .system-prompt-acc {
-    background-color: #f8fafc !important;
+    background-color: #ffffff !important;
     border: 1px solid #e2e8f0 !important;
     border-radius: 8px !important;
     margin-top: 16px !important;
+    overflow: hidden !important;
+}
+
+.system-prompt-acc > button {
+    background-color: #f8fafc !important;
+    color: #0f172a !important;
+    font-weight: 600 !important;
+    border: none !important;
+    padding: 12px 16px !important;
+    width: 100% !important;
+}
+
+.system-prompt-acc > button span {
+    color: #0f172a !important;
+    font-weight: 600 !important;
+    font-size: 0.92rem !important;
+}
+
+/* Sidebar descriptions styling */
+.sidebar-panel .prose {
+    font-size: 0.9rem !important;
+    line-height: 1.5 !important;
+    color: #475569 !important;
 }
 
 /* Subtle scrollbar improvements for a cleaner look */

@@ -6,9 +6,15 @@ from services import chat_stream
 def submit_message(message, history):
     return "", message, history
 
-# Helper to dynamically update the active system prompt markdown in the accordion
+# Helpers to dynamically update persona information in the sidebar
 def update_system_prompt(persona_name):
     return f"```text\n{PERSONAS[persona_name]['system_prompt']}\n```"
+
+def update_persona_description(persona_name):
+    return f"✨ **Description:**\n{PERSONAS[persona_name]['description']}"
+
+def update_all_persona_details(persona_name):
+    return update_persona_description(persona_name), update_system_prompt(persona_name)
 
 # Read CSS styling from style.css
 try:
@@ -52,6 +58,10 @@ with gr.Blocks(
                 interactive=True
             )
             
+            persona_desc_md = gr.Markdown(
+                value=update_persona_description("Coding Teacher")
+            )
+            
             temp_slider = gr.Slider(
                 minimum=0.0,
                 maximum=1.5,
@@ -67,11 +77,11 @@ with gr.Blocks(
                     value=update_system_prompt("Coding Teacher")
                 )
                 
-            # Connect persona dropdown changes to Accordion display
+            # Connect persona dropdown changes to display components
             mode_dropdown.change(
-                fn=update_system_prompt,
+                fn=update_all_persona_details,
                 inputs=mode_dropdown,
-                outputs=system_prompt_md
+                outputs=[persona_desc_md, system_prompt_md]
             )
             
         # Right Panel (Chat Interface)

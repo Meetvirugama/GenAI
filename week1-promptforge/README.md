@@ -15,10 +15,10 @@ It highlights essential prompt engineering concepts including:
 
 ## 🎨 Persona Modes
 
-1. **Technical Explainer:** Provides clear, simple, and jargon-free explanations using vivid analogies. Perfect for breaking down complex systems.
-2. **Debate Coach:** Analyzes controversial or dual-sided questions, offering a balanced Pros/Cons list and a practical tip on debating the topic.
-3. **Code Reviewer:** Evaluates code snippets. Prompted to return structured JSON (Issues, Suggestions, Severity), which the frontend parses and styles as a readable report.
-4. **Creative Writer:** Produces short stories and descriptions with high sensory imagery and evocative prose.
+1. **Coding Teacher:** Friendly and interactive programming instructor who explains concepts with clean code blocks, provides customized learning roadmaps, and challenges you with practical coding quiz questions.
+2. **ESport Coach:** Elite esports consultant analyzing tactical compositions, physical mechanics, mental composure, and fight execution for competitive titles like Valorant, League of Legends, BGMI, and Free Fire.
+3. **Doctor:** Empathetic virtual health consultant providing scientific symptom reviews and follow-up discussion points for your doctor (always prefaced with a clear medical disclaimer).
+4. **Code Reviewer:** Evaluates code snippets. Prompted to return structured JSON (Issues, Suggestions, Severity), which the frontend parses and styles as a readable report.
 
 ---
 
@@ -29,7 +29,7 @@ It highlights essential prompt engineering concepts including:
 - A Groq API Key (obtain one for free at [console.groq.com](https://console.groq.com/))
 
 ### 1. Clone & Navigate
-Ensure you are in the `week1-promptforge/` directory:
+Ensure you are in the `week1-promptforge` directory:
 ```bash
 cd week1-promptforge
 ```
@@ -80,13 +80,13 @@ http://127.0.0.1:7860
 
 ## 🧪 How to Test Modes
 
-- **Technical Explainer:** Choose the mode, type `What is an API?` or `What is database indexing?`. Verify the output features a bulleted definition and a clear analogy.
-- **Debate Coach:** Type `Should AI replace writers?` or `Is remote work better than in-office work?`. Inspect the balanced Pros and Cons sections.
+- **Coding Teacher:** Choose the mode, type `Explain lists in Python` or `How do async functions work?`. Observe the clear explanation, step-by-step roadmap, and coding challenge at the end.
+- **ESport Coach:** Ask `How do I improve my rotation and fight execution in BGMI?` or `What is the meta strategy for Valorant?`. Observe the structured guide covering mechanics, tactics, and mental composure.
+- **Doctor:** Ask `What causes mild fatigue and head pressure?`. Verify that the AI displays a bold medical disclaimer first, followed by clinical factors and talking points for your doctor.
 - **Code Reviewer:** Paste a bugged or unoptimized block of code:
   ```python
   def calculate(x, y):
       return x/y
   ```
   Watch the raw JSON generation stream, then watch it transform into a polished review table outlining the severity, issues (e.g., division by zero, missing types), and recommendations.
-- **Creative Writer:** Change the temperature to `1.2` or `1.5`, choose "Creative Writer", and type `A lighthouse in a cosmic storm`. Experience the imagery and variance.
 - **System Prompt Inspector:** Toggle the **📜 Active System Prompt** accordion at the bottom of the sidebar to inspect the exact prompt structure sent to the LLM.
