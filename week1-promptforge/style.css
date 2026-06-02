@@ -1,0 +1,99 @@
+/* Custom CSS for a modern, simple, formal, and professional UI theme */
+
+body, .gradio-container {
+    background-color: #f8fafc !important; /* Cool slate background */
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+}
+
+/* Header/Banner Style */
+.banner {
+    background-color: #ffffff !important;
+    border: 1px solid #e2e8f0 !important;
+    border-left: 6px solid #4f46e5 !important; /* Indigo accent border */
+    padding: 24px 32px !important;
+    border-radius: 12px !important;
+    margin-bottom: 24px !important;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.03), 0 2px 4px -1px rgba(0, 0, 0, 0.02) !important;
+}
+
+.banner h1 {
+    font-family: 'Inter', sans-serif !important;
+    font-size: 1.85rem !important;
+    font-weight: 700 !important;
+    color: #0f172a !important; /* Deep slate */
+    margin: 0 0 6px 0 !important;
+    letter-spacing: -0.02em !important;
+}
+
+.banner p {
+    font-size: 0.95rem !important;
+    color: #475569 !important; /* Muted slate */
+    margin: 0 !important;
+    line-height: 1.5 !important;
+}
+
+/* Sidebar/Configuration Panel */
+.sidebar-panel {
+    background-color: #ffffff !important;
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 12px !important;
+    padding: 24px !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02) !important;
+}
+
+.sidebar-panel h3 {
+    margin-top: 0 !important;
+    color: #0f172a !important;
+    font-weight: 600 !important;
+}
+
+/* Buttons */
+.primary-btn {
+    background-color: #4f46e5 !important; /* Indigo */
+    color: #ffffff !important;
+    border-radius: 8px !important;
+    border: 1px solid #4338ca !important;
+    font-weight: 600 !important;
+    transition: all 0.15s ease-in-out !important;
+    cursor: pointer !important;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05) !important;
+}
+
+.primary-btn:hover {
+    background-color: #4338ca !important;
+    border-color: #3730a3 !important;
+    transform: translateY(-0.5px) !important;
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.15) !important;
+}
+
+.primary-btn:active {
+    transform: translateY(0) !important;
+}
+
+/* Accordion for System Prompt */
+.system-prompt-acc {
+    background-color: #f8fafc !important;
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 8px !important;
+    margin-top: 16px !important;
+}
+
+/* Subtle scrollbar improvements for a cleaner look */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
+

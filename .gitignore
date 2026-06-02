@@ -1,0 +1,19 @@
+# Virtual environment
+venv/
+ENV/
+env/
+.venv/
+
+# Environment files
+.env
+.env.local
+.env.*
+
+# Python Cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# System files
+.DS_Store
+Thumbs.db
