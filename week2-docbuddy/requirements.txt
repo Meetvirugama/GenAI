@@ -1,0 +1,12 @@
+langchain
+langchain-community
+langchain-groq
+gradio==4.44.1
+pydantic==2.9.2
+python-dotenv
+langchain-huggingface
+chromadb
+pypdf
+cryptography>=3.1
+sentence-transformers
+pymupdf4llm

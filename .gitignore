@@ -17,3 +17,9 @@ __pycache__/
 # System files
 .DS_Store
 Thumbs.db
+
+# Vector DB
+chroma_store/
+
+# Documents
+*.pdf
