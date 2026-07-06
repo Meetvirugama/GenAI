@@ -1,92 +1,102 @@
-# PromptForge — Multi-Mode AI Assistant
+# Week 1: PromptForge — Multi-Mode AI Assistant
 
-Welcome to **PromptForge**, the mini-project for **Week 1 of the MSTC GenAI Track 2026**. 
+Welcome to the **Week 1** project of the GenAI Track. This project focuses entirely on the foundational layer of Generative AI: **Prompt Engineering** and direct **LLM API integration**. 
 
-PromptForge is a responsive, elegantly styled Gradio web application that lets you interact with a Large Language Model (specifically `llama-3.3-70b-versatile` via the Groq API) across four distinct, pre-configured personas. 
-
-It highlights essential prompt engineering concepts including:
-- **System Prompt Customization:** Fine-tuning the LLM's role, rules, and constraints.
-- **Few-Shot Prompt Injection:** Injecting prompt-response examples to guarantee formatting.
-- **Temperature Control:** Changing response randomness.
-- **Structured JSON Parsing:** Generating pure JSON outputs and styling them in clean Markdown.
-- **Streaming Response Processing:** Real-time token delivery to the client interface.
+In this week, we don't use heavy frameworks like LangChain or LangGraph. Instead, we use the raw Groq API to understand exactly how messages are sent, formatted, and parsed by a Large Language Model.
 
 ---
 
-## 🎨 Persona Modes
+## 🧠 Core Concepts & Theory (with Real-World Examples)
 
-1. **Coding Teacher:** Friendly and interactive programming instructor who explains concepts with clean code blocks, provides customized learning roadmaps, and challenges you with practical coding quiz questions.
-2. **ESport Coach:** Elite esports consultant analyzing tactical compositions, physical mechanics, mental composure, and fight execution for competitive titles like Valorant, League of Legends, BGMI, and Free Fire.
-3. **Doctor:** Empathetic virtual health consultant providing scientific symptom reviews and follow-up discussion points for your doctor (always prefaced with a clear medical disclaimer).
-4. **Code Reviewer:** Evaluates code snippets. Prompted to return structured JSON (Issues, Suggestions, Severity), which the frontend parses and styles as a readable report.
+### 1. The Chat Completion API
+Modern LLMs operate on a conversation history structure rather than a single string of text. A prompt is usually constructed as a list of dictionaries with specific `role`s:
+- **`system`**: Sets the behavior, persona, and strict constraints. The AI treats this as its absolute truth.
+- **`user`**: The actual query or input from the human.
+- **`assistant`**: The AI's previous responses (used for conversational memory).
+
+> **🏢 Modern Example:** When you use **ChatGPT's "Custom Instructions"**, you are silently modifying the `system` role behind the scenes. In the enterprise world, companies like **Shopify** use strict system prompts to create customer service bots that are legally bound to only talk about return policies and are explicitly forbidden from offering unauthorized discounts.
+
+### 2. Prompt Engineering Techniques Used
+* **Persona Adoption**: By deeply defining a persona in the system prompt (e.g., "You are an elite ESport Coach for Valorant"), the LLM changes its vocabulary, tone, and the structure of its advice.
+* **Few-Shot Prompting**: Sometimes telling an LLM what to do isn't enough; you have to *show* it. Few-shot prompting involves injecting dummy `user`/`assistant` message pairs into the history *before* the actual user query. This forces the LLM to recognize and mimic a specific output format.
+  > **🏢 Modern Example:** Imagine building an **automated accounting tool**. You use few-shot prompting to show the AI five examples of messy, unstructured vendor emails and the exact clean JSON format you expect back (extracting Invoice Number, Date, and Total Amount).
+* **Temperature**: A parameter controlling randomness. A temperature of `0.0` makes the model deterministic and analytical (perfect for the Code Reviewer mode), while `0.7` allows for more creativity and conversational flow (good for the Teacher mode).
+
+### 3. Structured Outputs (JSON Mode)
+When building applications, you often don't want raw text; you want data you can parse (like a dictionary). By instructing the LLM to output pure JSON and setting the `response_format` API flag to `{"type": "json_object"}`, we ensure the model's output can be directly deserialized by Python's `json.loads()` and rendered into a beautiful UI.
+> **🏢 Modern Example:** Apps like **Duolingo** or **Quizlet** might use an LLM in JSON mode in the background. The user asks for a quiz on French verbs, and the LLM returns `{"question": "...", "options": [...], "answer": "..."}` so the app can render interactive buttons, rather than just printing raw text to the screen.
+
+### 4. Streaming Response
+Waiting 10 seconds for a large response ruins UX. Using `stream=True` in the API call allows the server to yield chunks (tokens) as they are generated, giving the user a real-time typing effect.
+> **🏢 Modern Example:** This is the exact typing effect you see when using **Claude**, **ChatGPT**, or **Gemini**. Without streaming, the page would just freeze with a loading spinner until the entire paragraph was finished computing.
 
 ---
 
-## 🚀 Setup & Installation
+## 🛠️ Key Code & Functions
+
+### `client.chat.completions.create(...)`
+This is the workhorse function from the `groq` library.
+```python
+response = client.chat.completions.create(
+    model="llama-3.3-70b-versatile",
+    messages=[
+        {"role": "system", "content": "You are a helpful assistant."},
+        {"role": "user", "content": "Explain gravity."}
+    ],
+    temperature=0.7,
+    stream=True
+)
+```
+
+### Yielding Tokens for UI
+To achieve the streaming effect in Gradio, the backend function must be a generator:
+```python
+partial_message = ""
+for chunk in response:
+    if chunk.choices[0].delta.content is not None:
+        partial_message += chunk.choices[0].delta.content
+        yield partial_message # Gradio immediately updates the UI with each yield
+```
+
+---
+
+## 🚀 Setup & Execution
 
 ### Prerequisites
-- Python 3.10 or higher
-- A Groq API Key (obtain one for free at [console.groq.com](https://console.groq.com/))
+- Python 3.10+
+- Groq API Key (from [console.groq.com](https://console.groq.com/))
 
-### 1. Clone & Navigate
-Ensure you are in the `week1-promptforge` directory:
-```bash
-cd week1-promptforge
-```
+### Installation
+1. Navigate to the directory:
+   ```bash
+   cd week1-promptforge
+   ```
+2. Create and activate a virtual environment:
+   ```bash
+   python -m venv venv
+   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   ```
+3. Install dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
+4. Configure your environment variables:
+   ```bash
+   cp .env.example .env
+   # Open .env and add your GROQ_API_KEY
+   ```
 
-### 2. Configure Virtual Environment
-Create and activate a sandbox Python environment:
-```bash
-# On macOS/Linux:
-python -m venv venv
-source venv/bin/activate
-
-# On Windows:
-python -m venv venv
-venv\Scripts\activate
-```
-
-### 3. Install Dependencies
-Install all required packages from `requirements.txt`:
-```bash
-pip install -r requirements.txt
-```
-
-### 4. Setup API Keys
-Copy the `.env.example` file to `.env`:
-```bash
-cp .env.example .env
-```
-Open `.env` in your editor and replace the value with your actual Groq API key:
-```env
-GROQ_API_KEY=gsk_abc123...
-```
-
----
-
-## 🖥️ Running the Application
-
-To start the server, run:
+### Running the App
 ```bash
 python app.py
 ```
-
-The application will spin up a local server. Open your browser and navigate to:
-```
-http://127.0.0.1:7860
-```
+Open `http://127.0.0.1:7860` in your browser. Try switching between the different modes (Coding Teacher, ESport Coach, Doctor, Code Reviewer) to see how the system prompt drastically alters the LLM's behavior!
 
 ---
 
-## 🧪 How to Test Modes
-
-- **Coding Teacher:** Choose the mode, type `Explain lists in Python` or `How do async functions work?`. Observe the clear explanation, step-by-step roadmap, and coding challenge at the end.
-- **ESport Coach:** Ask `How do I improve my rotation and fight execution in BGMI?` or `What is the meta strategy for Valorant?`. Observe the structured guide covering mechanics, tactics, and mental composure.
-- **Doctor:** Ask `What causes mild fatigue and head pressure?`. Verify that the AI displays a bold medical disclaimer first, followed by clinical factors and talking points for your doctor.
-- **Code Reviewer:** Paste a bugged or unoptimized block of code:
-  ```python
-  def calculate(x, y):
-      return x/y
-  ```
-  Watch the raw JSON generation stream, then watch it transform into a polished review table outlining the severity, issues (e.g., division by zero, missing types), and recommendations.
-- **System Prompt Inspector:** Toggle the **📜 Active System Prompt** accordion at the bottom of the sidebar to inspect the exact prompt structure sent to the LLM.
+## 🎯 Learning Outcomes
+By completing this week, you should understand:
+1. How to structure `messages` for a Chat API.
+2. How to write a robust system prompt to constrain AI behavior.
+3. How to stream tokens to a frontend for better UX.
+4. How to force an LLM to generate parseable JSON for application logic.

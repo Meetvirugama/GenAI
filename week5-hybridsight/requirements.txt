@@ -1,0 +1,12 @@
+langchain
+langchain-community
+langchain-groq
+langgraph
+chromadb
+sentence-transformers
+duckduckgo-search
+wikipedia
+gradio
+python-dotenv
+groq
+pypdf

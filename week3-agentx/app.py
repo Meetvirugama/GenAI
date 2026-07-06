@@ -4,12 +4,13 @@ import gradio_client.utils as client_utils
 
 # Monkey patch for Gradio json schema parser bug with boolean additionalProperties
 _original_schema_parser = client_utils._json_schema_to_python_type
-def _patched_schema_parser(schema, defs):
-    if isinstance(schema, dict) and "additionalProperties" in schema and isinstance(schema["additionalProperties"], bool):
-        schema = schema.copy()
-        del schema["additionalProperties"]
-    return _original_schema_parser(schema, defs)
-client_utils._json_schema_to_python_type = _patched_schema_parser
+
+def patched_schema_parser(schema):
+    if schema.get("additionalProperties") is False:
+        schema.pop("additionalProperties")
+    return _original_schema_parser(schema)
+
+client_utils._json_schema_to_python_type = patched_schema_parser
 
 from agent import run_agent_with_trace
 
@@ -52,4 +53,4 @@ with gr.Blocks(title="AgentX — Research Agent") as demo:
     ).then(lambda: "", outputs=msg_box)
 
 if __name__ == "__main__":
-    demo.launch(share=True)
+    demo.launch()
