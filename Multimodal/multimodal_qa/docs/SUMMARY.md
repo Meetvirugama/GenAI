@@ -9,20 +9,23 @@ The primary purpose of this application is to serve as a high-performance, enter
 ## Business Requirements
 - **Intelligent Routing:** The system must automatically determine the best tool (or combination of tools) to answer a user's question.
 - **Multimodal Support:** The system must support text, PDF, and image inputs.
-- **Production Readiness:** The system must handle concurrent users, large file uploads, rate limits, and malicious prompt injections.
+- **Production Readiness:** The system must handle concurrent users, robust sessions via Google OAuth, and secure SQLite profile storage.
 
 ## Functional Requirements
-- **PDF Upload:** Users can upload up to 15MB of PDF documents per session.
-- **Image Upload:** Users can upload a single image for analysis.
-- **Hybrid Chat:** A conversational interface that maintains a sliding-window memory of the last 10 interactions.
-- **Reasoning Trace:** The system must transparently display the agent's internal "thought process" and tool observations.
+- **Authentication:** Users must securely log in via Google OAuth.
+- **PDF Upload:** Users can upload PDFs which are immediately embedded into the vector store.
+- **Image Upload:** Users can upload a single image for analysis directly in the chat interface.
+- **Hybrid Chat:** A conversational interface built in React that maintains a conversational history.
+- **Reasoning Trace:** The system must transparently display the agent's internal "thought process" and tool observations via the UI.
 
 ## Architecture Highlights
+- **Backend:** FastAPI (Python)
+- **Frontend:** React + Vite + TypeScript (Modern UI)
 - **Framework:** LangGraph (Stateful Agent orchestration)
-- **UI:** Gradio (Web Interface)
-- **LLM:** Groq (Llama-3-70b-versatile with Llama-3-8b-8192 fallbacks)
+- **LLM:** Groq (Llama-3-70b-versatile with fallback support)
 - **Vision:** Groq (Llama-3.2-11b-vision-preview)
-- **Vector Database:** Pinecone (Cloud) with ChromaDB (Local Fallback)
+- **Vector Database:** ChromaDB (Local embeddings)
+- **SQL Database:** SQLite (User accounts & Session mapping)
 - **Embeddings:** HuggingFace (`all-MiniLM-L6-v2`)
 
 ## Related Documents

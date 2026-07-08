@@ -1,41 +1,38 @@
-# User Interface (Gradio Components)
+# User Interface (React Frontend)
 
 ## Overview
-The application uses **Gradio** (`gr.Blocks`) to render the web interface. Gradio allows for rapid development of machine learning web applications directly in Python. 
+The application uses a **React + Vite** frontend as the primary User Interface. This provides a fast, dynamic, and state-of-the-art Single Page Application (SPA) experience.
 
-Because Gradio handles its own WebSockets, routing, and React components under the hood, there is no traditional "Frontend" (HTML/JS) or "Backend" (Flask/FastAPI) code in this repository.
+*Note: There is a legacy Gradio implementation located in `multimodal_qa/ui/` which was used for initial prototyping, but the primary interactions now flow through the React application.*
 
-## Layout & Tabs
-The interface is split into three main tabs located in `ui/app.py`:
+## Layout & Components
+The interface is centered around a modern sidebar layout and a main chat arena.
 
-### 1. Hybrid Chat (`#chat`)
-- **Purpose:** The primary interface for interacting with the LangGraph Agent.
-- **Components:** 
-  - `gr.Chatbot`: Displays the conversational history.
-  - `gr.Textbox`: The input field for user queries.
-  - `gr.Markdown` (Trace Output): A dropdown accordion that displays the agent's internal thought process and tool usage (`trace_output`).
-- **Handlers:** `chat()`, `clear_chat()`
+### 1. Global Header
+- Displays the application branding.
+- Features dynamic user authentication controls (e.g. Login with Google / Logout).
 
-### 2. Document Q&A (`#docs`)
-- **Purpose:** Allows users to upload and index PDF files.
-- **Components:**
-  - `gr.File`: Configured with `file_types=[".pdf"]` and `file_count="multiple"`.
-  - `gr.Button` (Index Documents): Triggers the background embedding process.
-  - `gr.Button` (Clear All Docs): Clears the vector store for the session.
-- **Handlers:** `handle_pdf_upload()`, `clear_docs()`, `doc_chat()`
+### 2. Sidebar 
+- Used for navigating between different chat sessions (History).
+- Contains the "New Chat" functionality to clear the current active session state.
 
-### 3. Image Studio (`#vision`)
-- **Purpose:** Allows users to upload a single image for VQA (Visual Question Answering).
-- **Components:**
-  - `gr.Image`: Renders the uploaded image.
-  - `gr.Button` (Load Image): Caches the image path into session state.
-- **Handlers:** `handle_image_upload()`, `img_chat()`
+### 3. Main Chat Interface
+- **Message List:** Displays user messages and AI responses, parsing Markdown syntax for rich formatting.
+- **Thinking Accordion:** Provides a dropdown trace of the agent's thought process, tool invocations, and raw observations.
+- **Input Area:** 
+  - Text input for chatting.
+  - Image attachment button for VQA (Visual Question Answering).
+  - Document attachment button for RAG (Retrieval-Augmented Generation).
 
 ## State Management
-Gradio does not use traditional HTTP sessions. State is managed per-user using two mechanisms:
-1. **`gr.State`:** Used to store the `session_id` (a UUID generated on page load) and `image_path_state`. These are passed back and forth between the UI and backend handlers.
-2. **`contextvars`:** `session_id_var` and `image_path_var` (defined in `core/context.py`) are used to implicitly pass state down to deeply nested Langchain tools (like `describe_image`) without having to manually pipe the arguments through every function signature.
+The frontend manages state using standard React `useState` and `useEffect` hooks. 
+- Authentication state is verified by calling the `/api/me` endpoint.
+- If authenticated, the React app stores the user's profile information.
+- The `session_id` is maintained client-side and sent with every chat/upload request to ensure the backend maps the requests to the correct vector store and conversation history.
 
-## Rate Limiting & Memory
-- **Memory Pruning:** The `chat()` handler implements a sliding window, keeping only the last 10 messages (`history[-10:]`) before passing them to the agent. This prevents context-window exhaustion.
-- **Rate Limiting:** An in-memory dictionary (`request_timestamps`) tracks the last request time per `session_id`, enforcing a 3-second cooldown to prevent API abuse.
+## API Integration
+The React app communicates with the FastAPI backend via Axios HTTP requests:
+- `POST /api/chat`: Sends message, image, and session ID.
+- `POST /api/upload`: Sends PDF files via FormData.
+- `GET /login/google`: Initiates the OAuth flow.
+- `GET /api/me`: Returns the currently authenticated user's profile.
