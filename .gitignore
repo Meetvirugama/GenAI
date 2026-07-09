@@ -13,6 +13,7 @@ env/
 __pycache__/
 *.py[cod]
 *$py.class
+*.pyc
 
 # System files
 .DS_Store
@@ -23,3 +24,17 @@ chroma_store/
 
 # Documents
 *.pdf
+
+# Node
+node_modules/
+dist/
+
+# Data
+multimodal_qa/data/
+data/
+*.sqlite3
+history.db
+
+# IDE
+.vscode/
+.idea/
