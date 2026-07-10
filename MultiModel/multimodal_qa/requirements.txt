@@ -1,0 +1,25 @@
+langchain
+langgraph
+langchain-groq
+langchain-community
+groq
+chromadb
+sentence-transformers
+duckduckgo-search
+python-dotenv
+pinecone
+langchain-pinecone
+tenacity
+pytest
+pytest-asyncio
+authlib
+fastapi
+uvicorn
+psycopg2-binary
+sqlalchemy
+itsdangerous
+rank_bm25
+langchain-community
+# Security & Quality additions
+slowapi
+filetype
