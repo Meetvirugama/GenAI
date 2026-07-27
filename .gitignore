@@ -1,0 +1,42 @@
+# Virtual environment
+venv/
+ENV/
+env/
+.venv/
+
+# Environment files
+.env
+.env.local
+.env.*
+
+# Python Cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyc
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Vector DB
+chroma_store/
+
+# Documents
+*.pdf
+
+# Node
+node_modules/
+dist/
+
+# Data
+multimodal_qa/data/
+data/
+*.sqlite3
+history.db
+
+# IDE
+.vscode/
+.idea/
+venv2/
+pytest_output.txt
