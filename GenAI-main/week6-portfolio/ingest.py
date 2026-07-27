@@ -7,6 +7,8 @@ from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.vectorstores import Chroma
 # pyrefly: ignore [missing-import]
 from langchain_community.embeddings import HuggingFaceEmbeddings
+from langchain.embeddings import CacheBackedEmbeddings
+from langchain.storage import LocalFileStore
 
 import gradio as gr
 
@@ -33,15 +35,23 @@ def index_pdf(filepath: str, progress=gr.Progress()) -> int:
         chunk.metadata["page"] = chunk.metadata.get("page", 0) + 1
 
     progress(0.7, desc="Embedding chunks...")
-    embedding_model = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2", model_kwargs={"device": "cpu"})
+    underlying_embeddings = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2", model_kwargs={"device": "cpu"})
+    store = LocalFileStore("./embedding_cache")
+    embedding_model = CacheBackedEmbeddings.from_bytes_store(
+        underlying_embeddings, store, namespace="all-MiniLM-L6-v2"
+    )
 
-    progress(0.9, desc="Writing to ChromaDB...")
-    Chroma.from_documents(
-        documents=chunks,
-        embedding=embedding_model,
+    progress(0.9, desc="Writing to ChromaDB in batches...")
+    db = Chroma(
+        embedding_function=embedding_model,
         persist_directory="./chroma_store",
         collection_name="lecture_notes"
     )
+    
+    batch_size = 100
+    for i in range(0, len(chunks), batch_size):
+        batch = chunks[i:i + batch_size]
+        db.add_documents(batch)
 
     progress(1.0, desc="Done!")
     return len(chunks)

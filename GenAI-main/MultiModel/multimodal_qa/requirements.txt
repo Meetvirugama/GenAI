@@ -1,0 +1,68 @@
+# Core Framework
+fastapi
+uvicorn[standard]
+python-dotenv
+pydantic>=2.0
+
+# LangChain & LangGraph
+langchain
+langgraph
+langchain-groq
+langchain-community
+langchain-pinecone
+langchain-experimental
+langchain-text-splitters
+
+# LLM / Vision Clients
+groq
+google-generativeai
+
+# Vector Stores
+chromadb
+pinecone
+
+# Embeddings
+sentence-transformers
+
+
+# Database
+sqlalchemy
+psycopg2-binary
+
+# Auth & Security
+PyJWT
+authlib
+itsdangerous
+slowapi
+filetype
+
+# Session / Cache
+redis
+fakeredis
+celery
+
+# Document Parsing
+pymupdf
+python-docx
+python-pptx
+beautifulsoup4
+pytesseract
+pdf2image
+rank_bm25
+docling
+Pillow
+
+# HTTP
+requests
+httpx
+
+# Testing
+pytest
+pytest-asyncio
+pytest-cov
+
+# Misc
+tenacity
+qdrant-client
+python-multipart
+duckduckgo-search>=6.0.0
