@@ -1,5 +1,5 @@
 import jwt
-from fastapi import Request, HTTPException
+from fastapi import Request
 from app.core.database import SessionLocal
 from app.core.config import Config
 

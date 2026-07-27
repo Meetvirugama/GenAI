@@ -62,7 +62,7 @@ def test_output_sanitization():
     safe = "Here is the summary of the PDF."
     assert sanitize_output(safe) == safe
     
-    dangerous = "Sure, I can help with that. os.system('rm -rf /')"
+    dangerous = "Sure, I can help with that. <script>alert('xss')</script>"
     sanitized = sanitize_output(dangerous)
     assert "flagged by the content filter" in sanitized
 

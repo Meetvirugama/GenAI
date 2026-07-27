@@ -12,7 +12,7 @@ class BaseParser(ABC):
         """
         try:
             return self._extract(file_path)
-        except Exception as e:
+        except Exception:
             logger.exception(f"Error parsing {file_path}")
             return {"text": "", "pages": [], "tables": [], "images": [], "metadata": {}, "sections": []}
 

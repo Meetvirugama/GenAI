@@ -123,8 +123,8 @@ class TestPDFParser:
         mock_doc = MagicMock()
         mock_doc.metadata = {"title": ""}
         mock_page = MagicMock()
-        mock_page.get_text.return_value = "PDF text content"
-        mock_doc.__iter__ = MagicMock(return_value=iter([mock_page]))
+        mock_page.get_text.return_value = "PDF text content" * 10
+        mock_doc.__iter__.side_effect = lambda: iter([mock_page])
         mock_doc.__len__.return_value = 1
 
         with patch("fitz.open", return_value=mock_doc):
@@ -143,8 +143,8 @@ class TestPDFParser:
         mock_doc = MagicMock()
         mock_doc.metadata = {"title": ""}
         mock_page = MagicMock()
-        mock_page.get_text.return_value = "Fallback content"
-        mock_doc.__iter__ = MagicMock(return_value=iter([mock_page]))
+        mock_page.get_text.return_value = "Fallback content" * 10
+        mock_doc.__iter__.side_effect = lambda: iter([mock_page])
         mock_doc.__len__.return_value = 1
 
         with patch("fitz.open", return_value=mock_doc):

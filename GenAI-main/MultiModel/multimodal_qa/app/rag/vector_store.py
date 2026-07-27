@@ -8,7 +8,7 @@ from langchain.embeddings import CacheBackedEmbeddings
 from langchain.storage import LocalFileStore
 # pyrefly: ignore [missing-import]
 from langchain.schema import Document
-from typing import List, Optional
+from typing import List
 from app.core.config import Config
 from app.core.logger import get_logger
 from app.rag.retrieval import RetrieverFactory, RetrievalStrategy

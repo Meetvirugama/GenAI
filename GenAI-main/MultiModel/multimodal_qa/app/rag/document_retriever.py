@@ -4,7 +4,7 @@ rag/retriever.py
 Document retrieval with:
   #3 Cross-Encoder Re-Ranker  — re-ranks BM25+semantic results by true relevance
 """
-from typing import Optional
+
 from app.core.logger import get_logger
 
 logger = get_logger(__name__)

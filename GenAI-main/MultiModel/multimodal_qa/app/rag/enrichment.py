@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import List
 from pydantic import BaseModel, Field
 from langchain_groq import ChatGroq
 from langchain.schema import Document

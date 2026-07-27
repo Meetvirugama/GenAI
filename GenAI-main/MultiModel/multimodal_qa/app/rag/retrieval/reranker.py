@@ -1,5 +1,5 @@
 import logging
-from typing import List, Sequence, Optional, Any
+from typing import Sequence, Optional, Any
 from langchain.schema import Document
 from langchain.callbacks.manager import Callbacks
 from langchain.retrievers.document_compressors.base import BaseDocumentCompressor

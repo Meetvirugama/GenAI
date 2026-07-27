@@ -85,7 +85,7 @@ const MermaidBlock = ({ chart }: { chart: string }) => {
 };
 
 const markdownComponents = {
-  code({ node, className, children, ...props }: any) {
+  code({ className, children, ...props }: any) {
     const isInline = !className;
     const match = /language-(\w+)/.exec(className || '');
     const language = match ? match[1] : 'text';
@@ -237,7 +237,7 @@ const ConfidenceBadge = ({ confidence }: { confidence?: Confidence }) => {
 };
 
 // --- Sidebar ---
-const Sidebar = ({ sessions, activeSessionId, sources, onSelectSession, onNewChat, searchQuery, handleSearch, searchResults, isSearching }: any) => {
+const Sidebar = ({ sessions, activeSessionId, onSelectSession, onNewChat, searchQuery, handleSearch, searchResults, isSearching }: any) => {
   return (
     <aside className={styles.sidebar}>
       <div className={styles.sidebarHeader}>

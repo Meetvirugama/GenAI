@@ -3,7 +3,7 @@ import logging
 import uuid
 import os
 from datetime import datetime
-from typing import List, Dict, Any, Optional
+from typing import List, Dict, Any
 
 try:
     # pyrefly: ignore [missing-import]

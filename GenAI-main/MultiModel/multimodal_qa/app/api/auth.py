@@ -1,4 +1,4 @@
-import os
+
 from fastapi import APIRouter, Request, Depends
 from fastapi.responses import RedirectResponse, HTMLResponse
 from authlib.integrations.starlette_client import OAuth

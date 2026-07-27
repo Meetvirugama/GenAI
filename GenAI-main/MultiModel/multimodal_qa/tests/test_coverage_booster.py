@@ -9,7 +9,6 @@ from app.rag.document_retriever import DocumentRetriever
 from app.rag.chunker import AdvancedChunker
 from app.rag.enrichment import DocumentEnricher
 from app.tools.document import get_search_tool
-from app.vision.groq_vision import groq_vision
 from app.vision.gemini_vision import gemini_vision
 from app.api.routes import chat_stream_endpoint, search_messages, get_sessions, get_session_messages, delete_session, update_feedback, upload_endpoint, get_task_status
 from app.api.routes import ChatRequest, FeedbackRequest
@@ -72,10 +71,6 @@ def test_tools(mock_search):
     # Just calling the tool wrappers
     get_search_tool(MagicMock())
     
-    try:
-        groq_vision.describe_image("test.jpg", "prompt")
-    except Exception:
-        pass
 
     try:
         gemini_vision.describe_image("test.jpg", "prompt")

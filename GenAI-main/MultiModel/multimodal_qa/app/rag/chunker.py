@@ -1,5 +1,5 @@
 import hashlib
-from typing import List, Dict
+from typing import List
 from langchain.schema import Document
 from langchain_text_splitters import RecursiveCharacterTextSplitter, MarkdownHeaderTextSplitter
 from app.core.logger import get_logger

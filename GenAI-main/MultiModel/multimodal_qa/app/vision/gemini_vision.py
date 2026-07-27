@@ -1,5 +1,5 @@
 import google.generativeai as genai
-import PIL.Image
+
 from app.core.config import Config
 import asyncio
 from app.core.logger import get_logger

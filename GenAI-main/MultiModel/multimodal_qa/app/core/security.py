@@ -12,8 +12,8 @@ Features implemented:
 """
 import re
 import filetype
-from datetime import datetime, timedelta
-from fastapi import Request, HTTPException
+from datetime import datetime
+from fastapi import HTTPException
 from slowapi import Limiter
 from slowapi.util import get_remote_address
 from app.core.logger import get_logger

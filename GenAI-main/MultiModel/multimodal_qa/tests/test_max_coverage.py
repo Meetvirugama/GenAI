@@ -74,9 +74,7 @@ async def test_everything():
     # 5. Vision
     try:
         from app.vision.gemini_vision import GeminiVision
-        from app.vision.groq_vision import GroqVision
         GeminiVision().describe_image("base64")
-        GroqVision().describe_image("base64")
     except Exception: pass
     
     # 6. API Routes

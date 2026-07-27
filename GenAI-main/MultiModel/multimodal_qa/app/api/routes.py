@@ -380,8 +380,7 @@ async def upload_endpoint(
         
     session_id_var.set(session_id)
 
-    doc_loader = request.app.state.doc_loader
-    vector_store = request.app.state.vector_store
+
 
     from app.core.database import User
     user = db.query(User).filter(User.id == user_id).first() if user_id else None

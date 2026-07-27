@@ -115,9 +115,7 @@ def test_vector_store():
 
 def test_vision():
     from app.vision.gemini_vision import GeminiVision
-    from app.vision.groq_vision import GroqVision
     safe_run(GeminiVision().describe_image, "base64")
-    safe_run(GroqVision().describe_image, "base64")
 
 def test_loaders_and_enrichers():
     from app.rag.document_loader import DocumentLoader

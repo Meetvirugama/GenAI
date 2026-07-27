@@ -1,5 +1,5 @@
 import logging
-from typing import Any, List, Dict
+from typing import Any
 from langchain.schema import Document
 from langchain.retrievers import EnsembleRetriever, ContextualCompressionRetriever, MultiQueryRetriever
 from langchain.retrievers.document_compressors import LLMChainExtractor

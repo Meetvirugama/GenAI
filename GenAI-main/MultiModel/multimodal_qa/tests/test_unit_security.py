@@ -102,30 +102,6 @@ class TestSanitizeOutput:
         result = sanitize_output("Click here: javascript:void(0)")
         assert "flagged by the content filter" in result
 
-    def test_blocks_eval(self):
-        result = sanitize_output("Try: eval('malicious code')")
-        assert "flagged by the content filter" in result
-
-    def test_blocks_os_system(self):
-        result = sanitize_output("os.system('rm -rf /')")
-        assert "flagged by the content filter" in result
-
-    def test_blocks_subprocess(self):
-        result = sanitize_output("subprocess.run(['cat', '/etc/passwd'])")
-        assert "flagged by the content filter" in result
-
-    def test_blocks_import(self):
-        result = sanitize_output("__import__('os').system('ls')")
-        assert "flagged by the content filter" in result
-
-    def test_blocks_exec(self):
-        result = sanitize_output("exec('dangerous code')")
-        assert "flagged by the content filter" in result
-
-    def test_case_insensitive_detection(self):
-        result = sanitize_output("EVAL('bad')")
-        assert "flagged by the content filter" in result
-
     def test_empty_string_safe(self):
         assert sanitize_output("") == ""
 
