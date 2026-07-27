@@ -1,3 +1,0 @@
-groq
-gradio
-python-dotenv
